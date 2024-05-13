@@ -1,0 +1,77 @@
+version: '3.7'
+
+services:
+  mysql-server:
+    image: mysql:8.0
+    container_name: mysql-server
+    environment:
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"
+    networks:
+      - zabbix-net
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+    command: --character-set-server=utf8 --collation-server=utf8_bin --default-authentication-plugin=mysql_native_password
+
+  zabbix-java-gateway:
+    image: zabbix/zabbix-java-gateway:alpine-5.4-latest
+    container_name: zabbix-java-gateway
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
+  zabbix-server-mysql:
+    image: zabbix/zabbix-server-mysql:alpine-5.4-latest
+    container_name: zabbix-server-mysql
+    environment:
+      DB_SERVER_HOST: "mysql-server"
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"
+      ZBX_JAVAGATEWAY: "zabbix-java-gateway"
+    networks:
+      - zabbix-net
+    ports:
+      - "10051:10051"
+    volumes:
+      - alertscripts:/usr/lib/zabbix/alertscripts
+      - externalscripts:/usr/lib/zabbix/externalscripts
+      - modules:/var/lib/zabbix/modules
+      - ssh_keys:/var/lib/zabbix/ssh_keys
+      - snmptraps:/var/lib/zabbix/snmptraps
+    restart: unless-stopped
+
+  zabbix-web-nginx-mysql:
+    image: zabbix/zabbix-web-nginx-mysql:alpine-5.4-latest
+    container_name: zabbix-web-nginx-mysql
+    environment:
+      ZBX_SERVER_HOST: "zabbix-server-mysql"
+      DB_SERVER_HOST: "mysql-server"
+      MYSQL_DATABASE: "zabbix"
+      MYSQL_USER: "zabbix"
+      MYSQL_PASSWORD: "zabbix_pwd"
+      MYSQL_ROOT_PASSWORD: "root_pwd"
+    networks:
+      - zabbix-net
+    ports:
+      - "80:8080"
+    restart: unless-stopped
+
+networks:
+  zabbix-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  mysql-data:
+  alertscripts:
+  externalscripts:
+  modules:
+  ssh_keys:
+  snmptraps:
