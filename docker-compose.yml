@@ -61,6 +61,17 @@ services:
       - "80:8080"
     restart: unless-stopped
 
+  zabbix-agent:
+    image: zabbix/zabbix-agent:alpine-6.4-latest
+    container_name: zabbix-agent
+    privileged: true
+    environment:
+      ZBX_HOSTNAME: "Zabbix server"
+      ZBX_SERVER_HOST: "zabbix-server-mysql"
+    networks:
+      - zabbix-net
+    restart: unless-stopped
+
 networks:
   zabbix-net:
     driver: bridge
