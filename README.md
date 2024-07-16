@@ -8,7 +8,6 @@ Ele inclui os componentes essenciais, como servidor, banco de dados e interface 
 
 ## Requisitos
 
-* Docker
 * Docker Compose
 
 ## Instruções
@@ -20,10 +19,15 @@ Ele inclui os componentes essenciais, como servidor, banco de dados e interface 
 5. [Para parar os contêineres](#para-parar-os-contêineres)
 6. [Conclusão](#conclusão)
 
-## Clone este repositório:
+## Clone o repositório:
 
 ```
 git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
+```
+
+## Navegue até o diretório do projeto
+
+```
 cd zabbix-docker-compose
 ```
 
@@ -36,7 +40,7 @@ docker-compose up -d
 ## Acesse o Zabbix via navegador:
 
 ```
-http://localhost
+http://IP-zabbix-server
 ```
 
 ## Faça login:
