@@ -35,7 +35,7 @@ cd zabbix-docker-compose
 ## Inicie os contêineres
 
 ```
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
 ## Acesse o Zabbix
