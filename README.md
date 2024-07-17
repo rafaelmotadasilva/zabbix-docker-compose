@@ -19,7 +19,7 @@ Ele inclui os componentes essenciais, como servidor, banco de dados e interface 
 5. [Para parar os contêineres](#para-parar-os-contêineres)
 6. [Conclusão](#conclusão)
 
-## Clone o repositório:
+## Clone o repositório
 
 ```
 git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
@@ -31,24 +31,22 @@ git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
 cd zabbix-docker-compose
 ```
 
-## Inicie os contêineres:
+## Inicie os contêineres
 
 ```
 docker-compose up -d
 ```
 
-## Acesse o Zabbix via navegador:
+## Acesse o Zabbix
 
-```
-http://IP-zabbix-server
-```
+Abra seu navegador e acesse http://host. Você será redirecionado para a página padrão para a interface do usuário do Zabbix.
 
 ## Faça login:
 
 - **Usuário:** Admin
 - **Senha:** zabbix
 
-## Para parar os contêineres:
+## Para parar os contêineres
 
 ```bash
 docker-compose down
