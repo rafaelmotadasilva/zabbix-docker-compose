@@ -14,7 +14,7 @@ Ele inclui os componentes essenciais, como servidor, banco de dados e interface 
 
 1. [Clone este repositório](#clone-este-repositório)
 2. [Inicie os contêineres](#inicie-os-contêineres)
-3. [Acesse o Zabbix via navegador](#acesse-o-zabbix-via-navegador)
+3. [Acesse o Zabbix](#acesse-o-zabbix)
 4. [Faça login](#faça-login)
 5. [Para parar os contêineres](#para-parar-os-contêineres)
 6. [Conclusão](#conclusão)
