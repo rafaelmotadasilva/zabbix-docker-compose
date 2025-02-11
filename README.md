@@ -24,7 +24,7 @@ Ele inclui os componentes essenciais, como servidor, banco de dados e interface 
 
 ```
 git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
-sudo docker-compose up -d
+cd zabbix-docker-compose
 ```
 
 ## Execute os contêineres
