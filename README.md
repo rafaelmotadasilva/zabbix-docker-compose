@@ -1,65 +1,69 @@
 # Zabbix com Docker Compose
 
-Este projeto oferece uma configuração Docker Compose para o Zabbix, simplificando sua implantação em contêineres Docker e permitindo monitorar e gerenciar a infraestrutura de TI de forma eficiente.
+Stack completa do Zabbix 6.4 com Docker Compose — servidor, banco de dados, Java Gateway, interface web e agente, prontos para subir com um único comando.
 
-## Visão Geral
+## Stack
 
-Ele inclui os componentes essenciais, como servidor, banco de dados e interface web. Assim, é possível implantar o Zabbix rapidamente e começar a monitorar sua infraestrutura sem complicações.
+- **Zabbix Server** — core de coleta e processamento
+- **Zabbix Web (nginx)** — interface de gerenciamento
+- **Zabbix Agent** — monitoramento do host local
+- **Zabbix Java Gateway** — monitoramento de aplicações JMX
+- **MySQL 8.0** — banco de dados com volume persistente
 
-## Requisitos
+Todas as imagens Zabbix utilizam a variante `alpine-6.4-latest`.
 
-* Docker Compose
+## Pré-requisitos
 
-## Instruções
+- Docker
+- Docker Compose
 
-1. [Clone o repositório](#clone-o-repositório)
-2. [Inicie os contêineres](#inicie-os-contêineres)
-3. [Acesse o Zabbix](#acesse-o-zabbix)
-4. [Faça login](#faça-login)
-5. [Para parar os contêineres](#para-parar-os-contêineres)
-6. [Conclusão](#conclusão)
-
-## Clone o repositório
-
-```
-git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
-cd zabbix-docker-compose
-```
-
-## Inicie os contêineres
-
-```
-sudo docker-compose up -d
-```
-
-## Acesse o Zabbix
-
-Abra seu navegador e acesse http://host. Você será redirecionado para a página padrão para a interface do usuário do Zabbix.
-
-## Faça login:
-
-- **Usuário:** Admin
-- **Senha:** zabbix
-
-## Para parar os contêineres
+## Como usar
 
 ```bash
-docker-compose down
+git clone https://github.com/rafaelmotadasilva/zabbix-docker-compose.git
+cd zabbix-docker-compose
+
+docker compose up -d
 ```
 
-## Conclusão
+Acesse a interface web:
 
-Este projeto simplifica a implantação do Zabbix em contêineres Docker, permitindo monitorar e gerenciar sua infraestrutura de TI de forma eficiente.
+```
+http://localhost
+```
 
-## Contribuição
+Login padrão: `Admin` / `zabbix`
 
-Se você tiver sugestões de melhorias ou correções para este guia, sinta-se à vontade para enviar uma pull request.
+## Portas expostas
 
-## Referências
+| Serviço | Porta |
+|---|---|
+| Interface Web | 80 |
+| Zabbix Server (trapper) | 10051 |
 
-* [Documentação oficial do Zabbix - Instalação em Contêineres](https://www.zabbix.com/documentation/current/pt/manual/installation/containers)
-* [Repositório oficial do Zabbix Docker](https://github.com/zabbix/zabbix-docker/)
+## Volumes persistentes
 
-## Licença
+| Volume | Conteúdo |
+|---|---|
+| `mysql-data` | Dados do banco |
+| `alertscripts` | Scripts de alerta customizados |
+| `externalscripts` | Scripts externos |
+| `modules` | Módulos do Zabbix |
+| `ssh_keys` | Chaves SSH para checks remotos |
+| `snmptraps` | Traps SNMP recebidos |
 
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
+## Configuração padrão
+
+| Variável | Valor |
+|---|---|
+| Banco de dados | zabbix |
+| Usuário DB | zabbix |
+| Senha DB | zabbix_pwd |
+
+> Altere as credenciais no `docker-compose.yml` antes de usar em produção.
+
+## Parar os containers
+
+```bash
+docker compose down
+```
